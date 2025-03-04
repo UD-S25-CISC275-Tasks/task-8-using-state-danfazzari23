@@ -229,12 +229,9 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number,
 ): Question[] {
-    const newQuestions: Question[] = [];
-    for (const question of questions) {
-        newQuestions.push(question);
-        if (question.id === targetId) {
-            newQuestions.push(duplicateQuestion(newId, question));
-        }
-    }
-    return newQuestions;
+    return questions.flatMap((question) =>
+        question.id === targetId ?
+            [question, duplicateQuestion(newId, question)]
+        :   [question],
+    );
 }
